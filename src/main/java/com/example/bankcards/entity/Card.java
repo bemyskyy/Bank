@@ -1,5 +1,6 @@
 package com.example.bankcards.entity;
 
+import com.example.bankcards.util.CardNumberConverter;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,6 +20,7 @@ public class Card {
     private Long id;
 
     @Column(name = "card_number", nullable = false, unique = true, length = 50)
+    @Convert(converter = CardNumberConverter.class)
     private String cardNumber;
 
     @ManyToOne(fetch = FetchType.LAZY)

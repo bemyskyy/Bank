@@ -7,3 +7,5 @@ databaseChangeLog:
       file: db/migration/changelog-3-init-transfers.yaml
   - include:
       file: db/migration/changelog-4-init-admin.yaml
+  - include:
+      file: db/migration/changelog-5-init-block-requests.yaml

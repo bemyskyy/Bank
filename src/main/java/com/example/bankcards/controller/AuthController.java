@@ -5,6 +5,7 @@ import com.example.bankcards.dto.AuthResponse;
 import com.example.bankcards.dto.RegisterRequest;
 import com.example.bankcards.security.JwtService;
 import com.example.bankcards.security.UserDetailsImpl;
+import com.example.bankcards.service.AuthService;
 import com.example.bankcards.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -23,14 +24,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
-    private final UserService userService;
+    private final AuthService authService;
 
     public AuthController(AuthenticationManager authenticationManager,
                           JwtService jwtService,
-                          UserService userService) {
+                          AuthService authService) {
         this.authenticationManager = authenticationManager;
         this.jwtService = jwtService;
-        this.userService = userService;
+        this.authService = authService;
     }
 
     @PostMapping("/login")
@@ -53,7 +54,7 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterRequest registerRequest) {
         try {
-            userService.registerUser(registerRequest.getUsername(), registerRequest.getPassword());
+            authService.registerUser(registerRequest.getUsername(), registerRequest.getPassword());
             return ResponseEntity.ok("Пользователь успешно зарегистрирован");
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
