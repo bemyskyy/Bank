@@ -2,8 +2,13 @@ package com.example.bankcards.entity;
 
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.Set;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "users")
 public class User {
@@ -24,6 +29,4 @@ public class User {
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Card> cards;
-
-    // todo getters and setters
 }

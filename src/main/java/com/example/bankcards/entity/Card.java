@@ -1,10 +1,15 @@
 package com.example.bankcards.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Set;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "cards")
 public class Card {
@@ -35,6 +40,4 @@ public class Card {
 
     @OneToMany(mappedBy = "toCard")
     private Set<Transfer> incomingTransfers;
-
-    // todo getters and setters
 }

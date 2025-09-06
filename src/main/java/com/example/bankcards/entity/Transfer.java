@@ -1,9 +1,14 @@
 package com.example.bankcards.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "transfers")
 public class Transfer {
@@ -25,6 +30,4 @@ public class Transfer {
 
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
-
-    // todo getters and setters
 }
