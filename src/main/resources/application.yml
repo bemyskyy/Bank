@@ -3,7 +3,7 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/demo_db
+    url: jdbc:postgresql://localhost:5433/demo_db
     username: demo_user
     password: demo_pass
     driver-class-name: org.postgresql.Driver
@@ -17,7 +17,7 @@ spring:
         format_sql: true
 
   liquibase:
-    change-log: classpath:db.migration/db.changelog-master.yaml
+    change-log: classpath:db/migration/db.changelog-master.yaml
 
 jwt:
   secret: "my-super-mega-duper-ultra-secret-key"
