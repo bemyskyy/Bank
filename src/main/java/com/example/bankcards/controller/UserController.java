@@ -11,6 +11,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -53,9 +54,9 @@ public class UserController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deleteUser(
             @PathVariable Long id,
-            @AuthenticationPrincipal UserDetails currentUser
+            Principal principal
     ) {
-        userService.deleteUser(id, currentUser.getUsername());
+        userService.deleteUser(id, principal.getName());
         return ResponseEntity.noContent().build();
     }
 }

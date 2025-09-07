@@ -3,6 +3,7 @@ package com.example.bankcards.entity;
 import com.example.bankcards.util.CardNumberConverter;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
@@ -11,6 +12,7 @@ import java.util.Set;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "cards")
 public class Card {
@@ -41,4 +43,11 @@ public class Card {
 
     @OneToMany(mappedBy = "toCard")
     private Set<Transfer> incomingTransfers;
+
+    public Card(Long id, String cardNumber, BigDecimal balance, CardStatus status) {
+        this.id = id;
+        this.cardNumber = cardNumber;
+        this.balance = balance;
+        this.status = status;
+    }
 }

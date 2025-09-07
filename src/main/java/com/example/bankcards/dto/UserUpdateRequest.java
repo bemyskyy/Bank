@@ -8,7 +8,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UserUpdateRequest {
-
     @Size(min = 3, max = 50, message = "Username должен быть от 3 до 100 символов")
     private String username;
 

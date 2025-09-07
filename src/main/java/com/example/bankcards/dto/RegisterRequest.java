@@ -2,11 +2,13 @@ package com.example.bankcards.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@AllArgsConstructor
 public class RegisterRequest {
     @NotBlank(message = "Имя пользователя обязательно")
     @Size(min = 3, max = 50, message = "Имя пользователя должно быть от 3 до 100 символов")

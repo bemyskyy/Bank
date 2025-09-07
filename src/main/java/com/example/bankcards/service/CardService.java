@@ -93,6 +93,7 @@ public class CardService {
         Card card = cardRepository.findById(cardId)
                 .orElseThrow(() -> new EntityNotFoundException("Карта не найдена"));
         card.setStatus(CardStatus.BLOCKED);
+        cardRepository.save(card);
     }
 
     @Transactional
@@ -100,6 +101,7 @@ public class CardService {
         Card card = cardRepository.findById(cardId)
                 .orElseThrow(() -> new EntityNotFoundException("Карта не найдена"));
         card.setStatus(CardStatus.ACTIVE);
+        cardRepository.save(card);
     }
 
     public Page<Card> getUserCards(Long userId, Pageable pageable, boolean isAdmin, String currentUsername) {
