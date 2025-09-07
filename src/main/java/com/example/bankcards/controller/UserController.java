@@ -1,7 +1,10 @@
 package com.example.bankcards.controller;
 
-import com.example.bankcards.entity.User;
+import com.example.bankcards.dto.UserCreateRequest;
+import com.example.bankcards.dto.UserResponse;
+import com.example.bankcards.dto.UserUpdateRequest;
 import com.example.bankcards.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -19,22 +22,31 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping("/admin/create")
+    @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<User> createAdmin(@RequestParam String username, @RequestParam String password) {
-        return ResponseEntity.ok(userService.createAdminUser(username, password));
+    public ResponseEntity<UserResponse> createUser(@Valid @RequestBody UserCreateRequest request) {
+        return ResponseEntity.ok(userService.createUser(request));
     }
 
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<List<User>> getAllUsers() {
+    public ResponseEntity<List<UserResponse>> getAllUsers() {
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<User> getUser(@PathVariable Long id) {
+    public ResponseEntity<UserResponse> getUser(@PathVariable Long id) {
         return ResponseEntity.ok(userService.getUser(id));
+    }
+
+    @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<UserResponse> updateUser(
+            @PathVariable Long id,
+            @Valid @RequestBody UserUpdateRequest request
+    ) {
+        return ResponseEntity.ok(userService.updateUser(id, request));
     }
 
     @DeleteMapping("/{id}")

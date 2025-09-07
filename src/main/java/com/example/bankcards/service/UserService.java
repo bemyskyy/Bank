@@ -1,13 +1,16 @@
 package com.example.bankcards.service;
 
+import com.example.bankcards.dto.UserCreateRequest;
+import com.example.bankcards.dto.UserResponse;
+import com.example.bankcards.dto.UserUpdateRequest;
 import com.example.bankcards.entity.Role;
 import com.example.bankcards.entity.User;
 import com.example.bankcards.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -19,38 +22,53 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public User createAdminUser(String username, String password) {
+    public UserResponse createUser(UserCreateRequest request) {
         User user = new User();
-        user.setUsername(username);
-        user.setPassword(passwordEncoder.encode(password));
-        user.setRole(Role.ADMIN);
-        return userRepository.save(user);
+        user.setUsername(request.getUsername());
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        user.setRole(request.getRole());
+        User saved = userRepository.save(user);
+        return UserResponse.from(saved);
     }
 
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public List<UserResponse> getAllUsers() {
+        return userRepository.findAll()
+                .stream()
+                .map(UserResponse::from)
+                .collect(Collectors.toList());
     }
 
-    public User getUser(Long id) {
-        return userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+    public UserResponse getUser(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Пользователь не найден"));
+        return UserResponse.from(user);
+    }
+
+    public UserResponse updateUser(Long id, UserUpdateRequest request) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Пользователь не найден"));
+
+        if (request.getUsername() != null) user.setUsername(request.getUsername());
+        if (request.getPassword() != null) user.setPassword(passwordEncoder.encode(request.getPassword()));
+        if (request.getRole() != null) user.setRole(request.getRole());
+
+        User updated = userRepository.save(user);
+        return UserResponse.from(updated);
     }
 
     public void deleteUser(Long id, String currentUsername) {
         User currentUser = userRepository.findByUsername(currentUsername)
-                .orElseThrow(() -> new RuntimeException("Current user not found"));
+                .orElseThrow(() -> new RuntimeException("Текущий пользователь не найден"));
 
         User targetUser = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Target user not found"));
+                .orElseThrow(() -> new RuntimeException("Пользователь не найден"));
 
-        // запретить удалять самого себя
         if (currentUser.getId().equals(targetUser.getId())) {
-            throw new RuntimeException("You cannot delete yourself");
+            throw new RuntimeException("Вы не можете удалить себя!");
         }
 
-        // запретить удалять админов
         if (targetUser.getRole() == Role.ADMIN) {
-            throw new RuntimeException("You cannot delete another admin");
+            throw new RuntimeException("Вы не можете удалить админа!");
         }
 
         userRepository.delete(targetUser);

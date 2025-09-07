@@ -20,11 +20,16 @@ spring:
     change-log: classpath:db/migration/db.changelog-master.yaml
 
 jwt:
-  secret_key: "mysupermegaduperultralongestsecretkeyforeffectivemobile"
+  secret_key: "MySuperMegaDuperUltraLongestSecretKeyForEffectiveMobile"
   expiration_time: 3600000
+
+card:
+  encryption:
+    key: "MySuperSecretKey"
+    algorithm: "AES"
 
 springdoc:
   swagger-ui:
     path: /swagger-ui.html
   api-docs:
-    path: /api-docs
+    path: /v3/api-docs

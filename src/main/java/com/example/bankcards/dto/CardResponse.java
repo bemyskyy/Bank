@@ -9,6 +9,7 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
+@AllArgsConstructor
 @NoArgsConstructor
 public class CardResponse {
     private Long id;

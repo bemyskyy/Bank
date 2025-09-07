@@ -30,17 +30,4 @@ public class AuthService {
 
         return userRepository.save(user);
     }
-
-    public User createAdminUser(String username, String password) {
-        if (userRepository.existsByUsername(username)) {
-            throw new RuntimeException("Пользователь с таким именем уже существует");
-        }
-
-        User user = new User();
-        user.setUsername(username);
-        user.setPassword(passwordEncoder.encode(password));
-        user.setRole(Role.ADMIN);
-
-        return userRepository.save(user);
-    }
 }

@@ -2,12 +2,14 @@ package com.example.bankcards.dto;
 
 import com.example.bankcards.entity.BlockRequest;
 import com.example.bankcards.entity.RequestStatus;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@AllArgsConstructor
 @NoArgsConstructor
 public class BlockRequestResponse {
     private Long id;

@@ -11,11 +11,7 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 public interface CardRepository extends JpaRepository<Card, Long> {
-    Optional<Card> findByCardNumber(String cardNumber);
-
     Page<Card> findAllByOwner(User owner, Pageable pageable);
-
     Page<Card> findAllByStatus(CardStatus status, Pageable pageable);
-
     Page<Card> findAllByExpirationDateBefore(LocalDate date, Pageable pageable);
 }

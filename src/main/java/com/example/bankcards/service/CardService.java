@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Random;
-import java.util.UUID;
 
 @Service
 public class CardService {
@@ -33,7 +32,7 @@ public class CardService {
     @Transactional
     public Card createCard(Long userId) {
         User owner = userRepository.findById(userId)
-                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Пользователь не найден"));
 
         Card card = new Card();
         card.setOwner(owner);
@@ -48,7 +47,7 @@ public class CardService {
     @Transactional
     public void deleteCard(Long id) {
         if (!cardRepository.existsById(id)) {
-            throw new EntityNotFoundException("Card not found");
+            throw new EntityNotFoundException("Карта не найдена");
         }
         cardRepository.deleteById(id);
     }
@@ -56,9 +55,9 @@ public class CardService {
     @Transactional
     public Transfer transfer(Long fromCardId, Long toCardId, BigDecimal amount) {
         Card from = cardRepository.findById(fromCardId)
-                .orElseThrow(() -> new EntityNotFoundException("From card not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Карта, с которой выполняется перевод, не найдена"));
         Card to = cardRepository.findById(toCardId)
-                .orElseThrow(() -> new EntityNotFoundException("To card not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Карта, в которую выполняется перевод, не найдена"));
 
         if (from.getStatus() == CardStatus.BLOCKED) {
             throw new IllegalStateException("Отправляющая карта заблокирована");

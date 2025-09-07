@@ -17,28 +17,24 @@ public class BlockRequestController {
         this.blockRequestService = blockRequestService;
     }
 
-    // пользователь создает заявку
     @PostMapping("/{cardId}")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<BlockRequestResponse> requestBlock(@PathVariable Long cardId) {
         return ResponseEntity.ok(BlockRequestResponse.from(blockRequestService.createRequest(cardId)));
     }
 
-    // админ подтверждает заявку
     @PutMapping("/{id}/approve")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<BlockRequestResponse> approve(@PathVariable Long id) {
         return ResponseEntity.ok(BlockRequestResponse.from(blockRequestService.approveRequest(id)));
     }
 
-    // админ отклоняет заявку
     @PutMapping("/{id}/reject")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<BlockRequestResponse> reject(@PathVariable Long id) {
         return ResponseEntity.ok(BlockRequestResponse.from(blockRequestService.rejectRequest(id)));
     }
 
-    // админ смотрит все заявки
     @GetMapping("/pending")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<BlockRequestResponse>> getPending() {
