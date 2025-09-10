@@ -55,7 +55,7 @@
 **Локальный запуск:**
 ```bash
 git clone https://github.com/bemyskyy/Bank_REST.git
-cd Bank_REST
+cd Bank
 mvn spring-boot:run
 ```
 
@@ -77,11 +77,3 @@ docker-compose up --build
 - Liquibase
 - Docker, Docker Compose
 - Swagger / OpenAPI
-
-## ✅ Критерии оценки
-- Соответствие требованиям ТЗ
-- Чистота архитектуры и кода
-- Реализация безопасности
-- Валидация и обработка ошибок
-- Покрытие тестами
-- Соблюдение принципов ООП и уровней абстракции
