@@ -54,7 +54,7 @@
 ## ⚙️ Развертывание и запуск
 **Локальный запуск:**
 ```bash
-git clone https://github.com/youfuckupmylifee/Bank_REST.git
+git clone https://github.com/bemyskyy/Bank_REST.git
 cd Bank_REST
 mvn spring-boot:run
 ```
